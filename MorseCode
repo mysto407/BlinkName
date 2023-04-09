@@ -1,0 +1,43 @@
+
+//Blink led to a given message
+const int dot = 200;
+const int dash = 3 * dot;
+
+const char* message = ".--..--.-"; // "PEMA" 
+const char* message2 = ".-.......---.-.--.-.-.."; // LHAGYAL
+
+bool restart = false; // to check if the LED is blinking
+
+
+
+void setup() {
+  // Set pin
+  pinMode(D7, OUTPUT);
+  pinMode(D6, INPUT_PULLUP);
+}
+
+void loop() {
+    if (digitalRead(D6) == HIGH) { //set to high due to abscence of a button
+        if(!restart){
+            restart = true;
+            for (int i = 0; i < strlen(message); i++) {
+                char c = message[i];
+                int duration = (c == '.') ? dot : dash;
+                
+                // Blink LED
+                digitalWrite(D7, HIGH);
+                delay(duration);
+                digitalWrite(D7, LOW);
+                delay(dot); 
+            }
+  
+  // space between blinks 
+            delay(dash);
+        }
+        else{
+            restart = false;
+        }
+    }
+    
+}
+
